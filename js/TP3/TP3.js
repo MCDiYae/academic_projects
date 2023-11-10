@@ -1,4 +1,5 @@
 function addStudent(){
+    //1 er etape : recuperer les element dapres formulaire
     students=document.getElementById('students')
     td=[document.getElementById('id').value,
         document.getElementById('nom').value,
