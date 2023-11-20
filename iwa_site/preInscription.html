@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css"/> 
+    <title>Pré-inscription</title>
+</head>
+<body>
+    <!-- <main>--> 
+        <img src="Image/IWAA.png" alt="Logo SMI" width="1200px"> <br>
+    <strong>
+        <a href="index.html">Accueill</a> -
+        <a href="objectif.html">Objectif</a>-
+        <a href="Debouches.html">Débouchée</a>-
+        <a href="programme.html"> programme</a>-
+        <a href="contact.html"> contact </a>-
+        <a href="preInscription.html">Pré-inscription</a>
+     </strong>
+    <h1>Pré-inscription</h1>
+    <h4> Formulaire de candidature à la formation IWA(Pré-inscription)</h4>
+    <h6>Vous étres invité à fournir les information ci dessous :</h6>
+        <form method="post" action="traitement.php">
+            <label for="nom">Nom</label> <br>
+                <input type="text" name="nom"   size="50" maxlength="10" /><br>
+            <label for="prenom">Prénom</label> <br>
+                <input type="text" name="prenom"   size="50" maxlength="10" /><br>
+            <label for="Telephone">Téléphone</label> <br>
+                <input type="tel" name="Telephone"   size="50" maxlength="10" /><br>
+            <p>
+            <label for="diplome"> Dernier diplôme obtenu</label><br/>
+                <select name="diplome" id="diplome"> 
+                    <option value="—Veuillez choisir une option—">—Veuillez choisir une option—</option> 
+                    <option value="licence (d'un établissement publique)">licence (d'un établissement publique)</option> 
+                    <option value="Master (d'un établissement publique)">Master (d'un établissement publique)</option> 
+                    <option value="Ingénieur (d'un établissement publique)">Ingénieur (d'un établissement publique)</option>
+                    <option value="Bac+3 (d'un établissement privé)">Bac+3 (d'un établissement privé)</option>
+                    <option value="Bac+4 (d'un établissement privé)">Bac+4 (d'un établissement privé)</option>
+                    <option value="Bac+5 (d'un établissement privé)">Bac+5 (d'un établissement privé)</option>
+                </select> </p>
+            <label for="Etablissement, ville et pays">Etablissement, ville et pays.</label> <br>
+                <input type="text" name="Etablissement, ville et pays"   size="50" maxlength="20" />    <br> 
+            <label for="Filière:">Filière:.</label> <br>
+                <input type="text" name="Filière:"   size="50" maxlength="50" /> <br>
+            <label for="Année d'obtention">Année d'obtention.</label> <br>
+                <input type="text" name="Année d'obtention"   size="50" maxlength="20" /> <br>
+            <label for="E-mail">E-mail</label> <br>
+                <input type="email" name="E-mail"   size="50" maxlength="20" /> <br>
+            <label for="cv"> CV (pdf file < 5 MB) </label> <br>
+                     <input type="file" id="cv" name="cv" accept="pdf,file" /><br>
+            <label for="Relevé"> Relevés des notes de la dernière année d'études
+                    (Relevé 1 < 5 MB) </label> <br>
+                 <input type="file" id="Relevé" name="Relevé" accept="pdf,file" /><br>
+            <label for="Relevé1"> Relevés des notes de l'avant dernière année d'études
+                (Relevé 2 < 5 MB) </label> <br>
+                 <input type="file" id="Relevé1" name="Relevé1" accept="pdf,file" /><br><br>
+            <input type="submit" value="Envoyer" />
+        </form> <br>
+            <p> <strong> NB: La formation IWA est payante. </strong> <br>
+            Frais de formation: 40 000 DH pour les 2 années. <br>
+                Payable en 2 tranches. <br>
+                Date limite de pré-inscription: 13 octobre 2023.</p>
+      
+        
+            <!-- </main>--> 
+</body>
+</html>
