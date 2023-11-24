@@ -37,7 +37,17 @@ class Calcul:
             if n%i==0:
                 return False
             
-        return True    
+        return True  
+      
+    @staticmethod
+    def listDiv(n):
+        diviseurs=[]
+        for i in range ( 1,n ):
+            if n%i==0:
+                diviseurs.append(i)
+        return diviseurs
+            
+
 
 obj= Calcul()
 fact=obj.factorial(3)
@@ -52,3 +62,7 @@ print(fact)
 print(suite)
 print(prm)
 print(tab)
+
+# appel static method
+res = Calcul.listDiv(33)
+print('liste des diviseur 33 ',res )
