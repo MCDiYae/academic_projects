@@ -1,0 +1,9 @@
+header{
+    text-align: center;
+    background-color: blanchedalmond;
+}
+nav { float: left; width: 150px; border: 1px solid black; } 
+section { margin-left: 170px; border: 1px solid blue; padding-left: 40px ;
+
+  } 
+footer { text-align: center; border: 1px solid blue; }
