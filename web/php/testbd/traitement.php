@@ -26,7 +26,7 @@ $stmt->bindParam(':email', $email);
 $stmt->execute();
 
 // Enregistrement dans le fichier stoc.doc
-$fichier = fopen('stoc.doc', 'a');
+$fichier = fopen('stoc.doc', 'r');
 fwrite($fichier, "Nom: $nom, Prénom: $prenom, Email: $email\n");
 fclose($fichier);
 
