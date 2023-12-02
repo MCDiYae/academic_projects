@@ -1,0 +1,18 @@
+package exercice.iwa.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import exercice.iwa.model.Client;
+
+@RestController
+public class ClientController {
+	@Autowired ClienService clientService;
+	@PostMapping("clients")
+	public Client addClient(@RequestBody Client client) {
+		return 
+	}
+
+}

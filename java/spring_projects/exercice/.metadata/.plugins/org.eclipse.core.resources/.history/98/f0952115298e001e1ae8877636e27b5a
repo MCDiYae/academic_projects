@@ -1,0 +1,17 @@
+package exercice.iwa.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import exercice.iwa.model.Compte;
+@Repository
+public interface CompteRepository extends JpaRepository<Compte,Long>{
+
+	List<Compte> findByClientCode(Long clientCode);
+
+	Object findByNumCompte(Long numCompte);
+	
+
+}

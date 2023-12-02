@@ -1,0 +1,12 @@
+package exercice.iwa.model;
+
+import java.util.Date;
+
+public class Client {
+	private Long code;
+    private String nom;
+    private String prenom;
+    private Date dateNaissance;
+    List <Compte> comptes;
+
+}

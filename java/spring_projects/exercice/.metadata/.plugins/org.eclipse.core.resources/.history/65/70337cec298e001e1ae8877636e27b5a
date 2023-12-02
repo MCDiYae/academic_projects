@@ -1,0 +1,25 @@
+package exercice.iwa.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import exercice.iwa.model.Client;
+import exercice.iwa.model.Compte;
+import exercice.iwa.service.ClientService;
+
+@RestController
+public class ClientController {
+	@Autowired ClientService clientService ;
+	@PostMapping("clients")
+	public Client addClient(@RequestBody Client client) {
+		return clientService.addClient(client);
+	}
+	
+@PostMapping("clients/{code}/comptes")
+public Compte addCompteToClient(@PathVariable Long code, @RequestBody Compte compte ) {
+	return client=clientService.getClientByCode(code);
+}
+}

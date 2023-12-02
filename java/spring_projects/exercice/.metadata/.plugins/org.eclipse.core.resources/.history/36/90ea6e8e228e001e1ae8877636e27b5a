@@ -1,0 +1,7 @@
+package exercice.iwa.model;
+
+public class Compte {
+	Long numCompte;
+	double solde;
+
+}

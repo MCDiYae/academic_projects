@@ -1,0 +1,18 @@
+package exercice.iwa.model;
+
+import java.util.Date;
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor @AllArgsConstructor @Data
+public class Client {
+	private Long code;
+    private String nom;
+    private String prenom;
+    private Date dateNaissance;
+    
+
+}

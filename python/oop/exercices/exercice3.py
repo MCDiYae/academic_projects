@@ -27,10 +27,10 @@ points_polygone = [(0, 0), (1, 1), (3, 1), (1, 3)]
 polygone = Polygone(points_polygone)
 
 # Afficher les points avant le déplacement
-print("Points avant déplacement:", polygone.points)
+print("Points avant deplacement:", polygone.points)
 
 # Déplacer le polygone
 polygone.deplacer(6, 2)
 
 # Afficher les points après le déplacement
-print("Points après déplacement:", polygone.points)            
+print("Points apres deplacement:", polygone.points)            

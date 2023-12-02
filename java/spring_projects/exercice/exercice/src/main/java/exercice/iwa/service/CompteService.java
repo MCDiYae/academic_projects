@@ -1,0 +1,36 @@
+package exercice.iwa.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import exercice.iwa.model.Compte;
+import exercice.iwa.repository.CompteRepository;
+import jakarta.persistence.EntityNotFoundException;
+
+@Service
+public class CompteService {
+	@Autowired CompteRepository compteRepository;
+	
+	 public List<Compte> getAllComptes() {
+	        return compteRepository.findAll();
+	    }
+
+	    public Compte getCompteByNumCompte(Long numCompte) {
+	        return compteRepository.findByNumCompte(numCompte)
+	                .orElseThrow(() -> new EntityNotFoundException("Compte not found with numCompte: " + numCompte));
+	    }
+
+	    public List<Compte> getComptesByClientCode(Long clientCode) {
+	        return compteRepository.findByClientCode(clientCode);
+	    }
+
+	    public Compte addCompte(Compte compte) {
+	        return compteRepository.save(compte);
+	    }
+
+	    public void deleteCompte(Long numCompte) {
+	        compteRepository.deleteById(numCompte);
+	    }
+}

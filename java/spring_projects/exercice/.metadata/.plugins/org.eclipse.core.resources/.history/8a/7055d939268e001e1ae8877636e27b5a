@@ -1,0 +1,16 @@
+package exercice.iwa.service;
+
+import org.springframework.stereotype.Service;
+
+import exercice.iwa.model.Client;
+
+@Service
+public class ClientService {
+
+
+	public Client addClient(Client client) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

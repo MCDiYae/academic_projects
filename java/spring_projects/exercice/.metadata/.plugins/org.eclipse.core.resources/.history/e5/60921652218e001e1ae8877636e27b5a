@@ -1,0 +1,5 @@
+package exercice.iwa.model;
+
+public class Client {
+
+}
