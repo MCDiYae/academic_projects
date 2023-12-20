@@ -6,9 +6,10 @@ import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException  {
 		TaskManager taskManager = new TaskManager();
 		Scanner scanner = new Scanner(System.in);
+		taskManager.loadTasksFromDatabase();
 
         while (true) {
             System.out.println("1. Ajouter une tache ");
@@ -22,10 +23,13 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    ajouterTache(scanner, taskManager);
+				
+					ajouterTache(scanner, taskManager);
+				
                     break;
                 case 2:
-                    taskManager.displayTasks();
+                	
+                	taskManager.displayTasks();
                     break;
                 case 3:
                     afficherDetailsTache(scanner, taskManager);
@@ -49,13 +53,15 @@ public class Main {
 
 	    if (tache != null) {
 	        taskManager.markTaskAsDone(tache);
+	        taskManager.removeCompletedTasks();
 	        System.out.println("La tâche a été marquée comme terminée.");
 	    } else {
 	        System.out.println("Tâche introuvable.");
 	    }
 	}
 
-	private static void afficherDetailsTache(Scanner scanner, TaskManager taskManager) {
+	private static void afficherDetailsTache(Scanner scanner, TaskManager taskManager) throws SQLException {
+		taskManager.loadTasksFromDatabase();
 	    System.out.print("Nom de la tâche : ");
 	    String nomTache = scanner.nextLine();
 	    Task tache = taskManager.getTaskByName(nomTache);
@@ -67,7 +73,7 @@ public class Main {
 	    }
 	}
 
-	private static void ajouterTache(Scanner scanner, TaskManager taskManager) {
+	private static void ajouterTache(Scanner scanner, TaskManager taskManager) throws SQLException {
 	    System.out.print("Nom de la tâche : ");
 	    String nom = scanner.nextLine();
 
@@ -86,15 +92,12 @@ public class Main {
 
 	    Task nouvelleTache = new Task(nom, description, dueDate, priority, completed);
 	    taskManager.addTask(nouvelleTache);
-	    try {
-			taskManager.saveTasksToDatabase(nouvelleTache);
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+	    taskManager.saveTasksToDatabase(nouvelleTache);
 
 	    System.out.println("Tâche ajoutée avec succès !");
 	}
+	
+	
 
 
 	}

@@ -4,7 +4,7 @@
 /**
  * 
  */
-module ToDoApp {
-	requires java.sql;
+module AppGestion {
 	requires java.desktop;
+	requires java.sql;
 }

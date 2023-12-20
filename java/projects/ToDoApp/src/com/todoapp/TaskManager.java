@@ -21,7 +21,15 @@ public class TaskManager {
 	        this.tasks = new ArrayList<>();
 	    }
 	  
-	  // Method pour etablir la connexion a la base de donnees
+	  public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	// Method pour etablir la connexion a la base de donnees
 	  public void establishConnection() {
 	        String url = "jdbc:mysql://localhost:3306/todo";
 	        String username = "root";
@@ -59,27 +67,46 @@ public class TaskManager {
 	  } 
 	  
 	// Methode pour charger la liste des taches depuis la base de donnees
-	  public void loadTasksFromDatabase () throws SQLException {
-		  try (Statement statement = connection.createStatement();
-		             ResultSet resultSet = statement.executeQuery("SELECT * FROM tasks")) {
+	  public void loadTasksFromDatabase() {
+		  establishConnection();
+		    if (connection == null) {
+		        System.err.println("La connexion à la base de données n'est pas établie.");
+		        return;
+		    }
 
-		            if (resultSet.next()) {
-		                String name = resultSet.getString("name");
-		                String description = resultSet.getString("description");
-		                LocalDate dueDate = resultSet.getDate("dueDate").toLocalDate();
-		                int priority = resultSet.getInt("priority");
-		                boolean completed = resultSet.getBoolean("completed");
+		    tasks.clear();
 
-		                Task task = new Task(name, description, dueDate, priority, completed);
-		                tasks.add(task);
-		            }
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-		            
-		            
-		   }
-	  }
-	  
+		    try (Statement statement = connection.createStatement();
+		         ResultSet resultSet = statement.executeQuery("SELECT * FROM tasks")) {
+
+		        while (resultSet.next()) {
+		            String name = resultSet.getString("name");
+		            String description = resultSet.getString("description");
+		            LocalDate dueDate = resultSet.getDate("dueDate").toLocalDate();
+		            int priority = resultSet.getInt("priority");
+		            boolean completed = resultSet.getBoolean("completed");
+
+		            Task task = new Task(name, description, dueDate, priority, completed);
+		            tasks.add(task);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+	  public void removeCompletedTasks() {
+		    // Supprimer toutes les tâches terminées de la liste en mémoire
+		    tasks.removeIf(Task::isCompleted);
+
+		    // Supprimer toutes les tâches terminées de la base de données
+		    if (connection != null) {
+		        try (Statement statement = connection.createStatement()) {
+		            statement.executeUpdate("DELETE FROM tasks WHERE completed = true");
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            // Gérer les erreurs lors de la suppression depuis la base de données
+		        }
+		    }
+		}
 	  
 	  
 	  public void addTask(Task task) {
@@ -91,8 +118,13 @@ public class TaskManager {
 	    }
 
 	    public void displayTasks() {
-	        for (Task task : tasks) {
-	            System.out.println(task.getName());
+	        if (tasks.isEmpty()) {
+	            System.out.println("Aucune tâche disponible.");
+	        } else {
+	            System.out.println("Liste des tâches :");
+	            for (Task task : tasks) {
+	                System.out.println(task.getName());
+	            }
 	        }
 	    }
 	    public void displayTaskDetails(Task task) {
@@ -106,6 +138,12 @@ public class TaskManager {
 	    
 	    public void markTaskAsDone(Task task) {
 	        task.setCompleted(true);
+	        try {
+				saveTasksToDatabase(task);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 
 		public Task getTaskByName(String nomTache) {

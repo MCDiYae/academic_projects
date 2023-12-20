@@ -1,17 +1,30 @@
 package com.gestiontaches;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JTable;
+
 import java.sql.*;
 import java.time.LocalDate;
 
 public class TaskManager {
 	  private List<Task> tasks;
 	  private Connection connection;
+	  private JTable taskTable;
+	  private TaskTableModel taskTableModel;
 	  
 	  public TaskManager() {
 	        this.tasks = new ArrayList<>();
+	        this.taskTable = new JTable();
+	        this.taskTableModel = new TaskTableModel(tasks);
 	    }
 	  
+	  public List<Task> getTasks() {
+	        return tasks;
+	    }
+	  public void setTaskTable(JTable taskTable) {
+	        this.taskTable = taskTable;
+	    }
 	  // Method pour etablir la connexion a la base de donnees
 	    public void establishConnection() throws SQLException {
 	        String url = "jdbc:mysql://localhost:3306/gestiontache";
@@ -32,9 +45,7 @@ public class TaskManager {
 	    
 	 // Méthode pour sauvegarder la liste des tâches dans la base de données
 	    public void saveTasksToDatabase() throws SQLException {
-	        if (connection == null || connection.isClosed()) {
-	            throw new SQLException("La connexion à la base de données n'est pas établie.");
-	        }
+	    	establishConnection();
 
 	        try (Statement statement = connection.createStatement()) {
 	            // Créer la table s'il n'existe pas
@@ -67,11 +78,12 @@ public class TaskManager {
 	    }
 	    
 	 // Methode pour charger la liste des taches depuis la base de donnees
-	    public void loadTasksFromDatabase() {
-	        if (connection == null) {
-	            System.err.println("La connexion à la base de données n'est pas établie.");
-	            return;
-	        }
+	    public void loadTasksFromDatabase() throws SQLException {
+	    	establishConnection();
+		    if (connection == null) {
+		        System.err.println("La connexion à la base de données n'est pas établie.");
+		        return;
+		    }
 
 	        tasks.clear();
 
@@ -94,19 +106,25 @@ public class TaskManager {
 	        }
 	    }
 	    
-	    public void updateTask(Task existingTask, Task newTask) {
-	        if (existingTask != null && newTask != null) {
-	            // Mise à jour de la tâche en mémoire
-	            existingTask.setName(newTask.getName());
-	            existingTask.setDescription(newTask.getDescription());
-	            existingTask.setDueDate(newTask.getDueDate());
-	            existingTask.setPriority(newTask.getPriority());
-	            existingTask.setCompleted(newTask.isCompleted());
+	   public void updateTask(Task updatedTask) throws SQLException {
+    if (connection == null || connection.isClosed()) {
+        throw new SQLException("La connexion à la base de données n'est pas établie.");
+    }
 
-	            // Mise à jour de la tâche dans la base de données
-	            //saveTasksToDatabase();
-	        }
-	    }
+    try (PreparedStatement preparedStatement = connection.prepareStatement(
+            "UPDATE tasks SET description=?, dueDate=?, priority=?, completed=? WHERE name=?")) {
+
+        preparedStatement.setString(1, updatedTask.getDescription());
+        preparedStatement.setDate(2, Date.valueOf(updatedTask.getDueDate()));
+        preparedStatement.setInt(3, updatedTask.getPriority());
+        preparedStatement.setBoolean(4, updatedTask.isCompleted());
+        preparedStatement.setString(5, updatedTask.getName());
+
+        preparedStatement.executeUpdate();
+    }
+    
+}
+
 	    
 	    public void removeCompletedTasks() {
 	        // Supprimer toutes les tâches terminées de la liste en mémoire
@@ -126,38 +144,43 @@ public class TaskManager {
 
 	    public void addTask(Task task) {
 	        tasks.add(task);
+	     // Mettez à jour le modèle de table et informez la JTable
+	        taskTableModel.setData(tasks);
+	        taskTableModel.fireTableDataChanged();
 	    }
 
-	    public void removeTask(Task task) {
-	        tasks.remove(task);
-	    }
-
-	    public void displayTasks() {
-	        for (Task task : tasks) {
-	            System.out.println(task.getName());
+	    public void removeTask(Task task) throws SQLException {
+	        if (connection == null || connection.isClosed()) {
+	            throw new SQLException("La connexion à la base de données n'est pas établie.");
 	        }
+
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(
+	                "DELETE FROM tasks WHERE name=?")) {
+
+	            preparedStatement.setString(1, task.getName());
+
+	            preparedStatement.executeUpdate();
+	        }
+	        displayTasks(); 
 	    }
-	    public void displayTaskDetails(Task task) {
-	        System.out.println("Task Details:");
-	        System.out.println("Name: " + task.getName());
-	        System.out.println("Description: " + task.getDescription());
-	        System.out.println("Due Date: " + task.getDueDate());
-	        System.out.println("Priority: " + task.getPriority());
-	        System.out.println("Completed: " + task.isCompleted());
+
+	    public void displayTasks() throws SQLException {
+	    	loadTasksFromDatabase();
+	    	TaskTableModel tableModel = new TaskTableModel(tasks);
+
+	    	tableModel.setData(getTasks());
+	    	tableModel.fireTableDataChanged();
+	    	
 	    }
-	    
-	    public void markTaskAsDone(Task task) {
+	   
+	
+	    public void markTaskAsDone(Task task) throws SQLException {
 	        task.setCompleted(true);
-	    }
-
-	    public Task getTaskByName(String nomTache) {
-	        for (Task task : tasks) {
-	            if (task.getName().equals(nomTache)) {
-	                return task;
-	            }
+	        updateTask(task);
+	        saveTasksToDatabase();  
 	        }
-	        return null; 
-	    }
+
+	    
 	    
 	
 

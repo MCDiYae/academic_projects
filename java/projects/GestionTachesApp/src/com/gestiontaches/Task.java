@@ -3,6 +3,7 @@ package com.gestiontaches;
 import java.time.LocalDate;
 
 public class Task {
+	
 	private String name ;
 	private String description ;
 	private LocalDate dueDate ;
@@ -60,16 +61,6 @@ public class Task {
 		this.completed = completed;
 	}
 
-	@Override
-	public String toString() {
-	    return "Task{" +
-	            "name='" + name + '\'' +
-	            ", description='" + description + '\'' +
-	            ", dueDate=" + dueDate +
-	            ", priority=" + priority +
-	            ", completed=" + completed +
-	            '}';
-	}
 	
 	
 }
