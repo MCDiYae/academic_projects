@@ -1,0 +1,7 @@
+<div>
+    
+    <button (click)="toChild()">to child</button>
+    <input [(ngModel)]="parentValue"  type="text" id="nom" placeholder="parent"><br>
+    <button (click)="fromChild()">from child</button>
+    <app-child #idChild></app-child>
+</div>
