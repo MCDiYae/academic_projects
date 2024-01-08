@@ -10,7 +10,7 @@
         <input formControlName="age" type="text" class="form-control" placeholder="Age">
       </div>
       <div>
-        <button type="button" class="btn btn-primary" (click)="sendData()">Primary</button>
+        <button type="button" class="btn btn-primary" (click)="sendData()" [disabled]="!formData.valid">Send</button>
       </div>
     </div>
   </form>

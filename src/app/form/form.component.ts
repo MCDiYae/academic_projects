@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -10,12 +10,12 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class FormComponent {
 sendData() {
-throw new Error('Method not implemented.');
+console.log(this.formData.value)
 }
   formData=this.fb.group({
-    firstName:[],
-    lastName:[],
-    age:[],
+    firstName:['',Validators.required],
+    lastName:['',Validators.required],
+    age:['',Validators.required],
   })
 constructor(private fb:FormBuilder){
 
