@@ -27,7 +27,7 @@ public class TaskManager {
 	    }
 	  // Method pour etablir la connexion a la base de donnees
 	    public void establishConnection() throws SQLException {
-	        String url = "jdbc:mysql://localhost:3306/gestiontache";
+	        String url = "jdbc:mysql://localhost:3306/app_gestion ";
 	        String username = "root";
 	        String password = "";
 	        try
@@ -126,21 +126,7 @@ public class TaskManager {
 }
 
 	    
-	    public void removeCompletedTasks() {
-	        // Supprimer toutes les tâches terminées de la liste en mémoire
-	        tasks.removeIf(Task::isCompleted);
-
-	        // Supprimer toutes les tâches terminées de la base de données
-	        if (connection != null) {
-	            try (Statement statement = connection.createStatement()) {
-	                statement.executeUpdate("DELETE FROM tasks WHERE completed = true");
-	            } catch (SQLException e) {
-	                e.printStackTrace();
-	                // Gérer les erreurs lors de la suppression depuis la base de données
-	            }
-	        }
-	    }
-
+	    
 
 	    public void addTask(Task task) {
 	        tasks.add(task);
