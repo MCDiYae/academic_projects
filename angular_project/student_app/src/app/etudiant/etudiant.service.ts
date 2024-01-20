@@ -17,4 +17,8 @@ export class EtudiantService {
   addEtudiant(etudiant:any){
     this.etudiants.push(etudiant)
   }
+  filterEtudiantsByNom(nom:string){
+    return this.etudiants.filter(etudiant =>
+    etudiant.nom.toLowerCase().startsWith(nom.toLowerCase()));
+    }
 }
