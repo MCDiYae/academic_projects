@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th scope="col">Id</th>
-            <th scope="col"><app-loupe #nomLoupe></app-loupe>Nom</th>
+            <th scope="col"><app-loupe (childEvent)="filtrer($event)" #nomLoupe></app-loupe>Nom</th>
             <th scope="col">age</th>
             </tr>
     </thead>

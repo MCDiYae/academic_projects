@@ -1,24 +1,31 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EtudiantService {
-  etudiants=[
-    {"id":1,"nom":"MANSOURI","age":23},
-    {"id":2,"nom":"HOUSSNI","age":22},
-    {"id":3,"nom":"BAKKALI","age":24},
-    ]
+  backEndURL="http://localhost:8080/students"
+  etudiants:any
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
   getEtudiants(){
-    return this.etudiants;
-  }
+    this.http.get(this.backEndURL).subscribe(data=>{
+    this.etudiants=data
+    })
+    return this.etudiants
+   }
+
   addEtudiant(etudiant:any){
     this.etudiants.push(etudiant)
   }
   filterEtudiantsByNom(nom:string){
-    return this.etudiants.filter(etudiant =>
-    etudiant.nom.toLowerCase().startsWith(nom.toLowerCase()));
+    if ((nom!="")&&(nom!=undefined)){
+    return this.etudiants.filter((
+    etudiant: { nom: string;}
+    )=>etudiant.nom.toLowerCase().startsWith(nom.toLowerCase())
+    )
+    }
+    return this.etudiants
     }
 }

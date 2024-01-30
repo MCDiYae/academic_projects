@@ -1,6 +1,6 @@
 package project.iwa.model;
 
-import java.util.Date;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class Student {
 	@Id
 	Long id;
-	Date date_naissance;
-	String nam;
+	int age;
+	String nom;
 	
 
 }

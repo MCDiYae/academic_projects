@@ -20,4 +20,10 @@ public class StudentService {
 		return studentRepository.save(student);
 	}
 
+	public void deleteStudent(Long id) {
+		// TODO Auto-generated method stub
+		studentRepository.deleteById(id);
+		
+	}
+
 }

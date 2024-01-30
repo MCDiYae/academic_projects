@@ -11,15 +11,14 @@ import { LoupeComponent } from './loupe/loupe.component';
   styleUrl: './list.component.css'
   })
   export class ListComponent {
+
     etudiants:any
     @ViewChild("nomLoupe") loupeComponent!: LoupeComponent;
     constructor(private etudiantService: EtudiantService){}
     ngAfterViewInit() {
-    const nom=this.loupeComponent.value
-    if ((nom!="")&&(nom!=undefined)){
-    this.etudiants=this.etudiantService.filterEtudiantsByNom(nom)
-    }else{
-    this.etudiants=this.etudiantService.getEtudiants()
-    }
-    }
+      this.etudiants=this.etudiantService.getEtudiants()
+      }
+      filtrer(nom:string){
+        this.etudiants=this.etudiantService.filterEtudiantsByNom(nom)
+        }
   }
